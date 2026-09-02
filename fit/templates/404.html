@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Registro no encontrado | FIT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    </style>
-</head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-lime-400 selection:text-zinc-950">
+{% extends 'fit/base.html' %}
 
-    <!-- Header / Navbar -->
-    <header class="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-lime-400 rounded-lg flex items-center justify-center text-zinc-950 font-black text-xl tracking-tighter">
-                    F
-                </div>
-                <span class="text-xl font-extrabold tracking-wider uppercase">FIT<span class="text-lime-400">.CORE</span></span>
-            </a>
-        </div>
-    </header>
+{% block titulo %}FIT | No encontrado{% endblock %}
 
-    <!-- 404 Content -->
+{% block contenido %}
     <main class="max-w-4xl mx-auto px-6 py-16 text-center flex-grow flex flex-col justify-center items-center">
-        
         <div class="relative mb-6">
             <span class="text-8xl md:text-9xl font-black text-zinc-900 tracking-tighter select-none">
                 404
@@ -52,13 +29,5 @@
             </svg>
             Volver al Panel Principal
         </a>
-
     </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-zinc-900 py-6 text-center text-zinc-600 text-xs">
-        <p>&copy; 2026 FIT Backend System. Sistema Centralizado de Registro y Auditoría.</p>
-    </footer>
-
-</body>
-</html>
+{% endblock %}
