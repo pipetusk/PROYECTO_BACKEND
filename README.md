@@ -38,3 +38,4 @@ Pasos para levantar el entorno virtual desde 0:
 6. **Verificación de Rutas:**
    - **Vista de Bienvenida:** Ingresa a `http://127.0.0.1:8000/` para ver el panel principal.
    - **Error 404:** Ingresa a `http://127.0.0.1:8000/hola` u otra ruta para validar el diseño de la página de error personalizada.
+
