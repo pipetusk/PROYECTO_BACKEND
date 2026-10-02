@@ -39,3 +39,34 @@ Pasos para levantar el entorno virtual desde 0:
    - **Vista de Bienvenida:** Ingresa a `http://127.0.0.1:8000/` para ver el panel principal.
    - **Error 404:** Ingresa a `http://127.0.0.1:8000/hola` u otra ruta para validar el diseño de la página de error personalizada.
 
+## Instalar base de datos
+
+**RECUERDA** iniciar WampServer antes de iniciar.
+
+1. Crear la base de datos en el WAMPSERVER, con MySQL. Agrupé todos los comandos para hacer todo de una.
+```
+CREATE DATABASE IF NOT EXISTS fitness_db;
+CREATE USER IF NOT EXISTS 'Fitness'@'%' IDENTIFIED BY 'fit12345';
+GRANT ALL PRIVILEGES ON fitness_db.* TO 'Fitness'@'%';
+FLUSH PRIVILEGES;
+```
+
+2. Aplica el `migrate` para poder clonar los datos de la base de datos:
+
+```
+python manage.py migrate
+```
+
+- En caso de que se quiera añadir cambios, usa este comando:
+   ```
+   python manage.py makemigrations
+   ```
+
+
+3. Crea la cuenta de acceso a Admin:
+   - Se ingresa el nombre, correo (no es necesario) y contraseña.
+
+```
+python manage.py createsuperuser
+```
+
