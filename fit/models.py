@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Variables de texto reutilizables para etiquetas (verbose_name)
-str_habilitado = "Habilitado"
+# Variables reutilizables para etiquetas (verbose_name) con prefijos de tipo
+int_habilitado = 1
 str_fecha_creacion = "Fecha Creación"
 str_fecha_actualizacion = "Fecha Actualización"
 str_codigo = "Código"
@@ -14,7 +14,7 @@ class PerfilUsuario(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
     nombre_completo = models.CharField("Nombre Completo", max_length=150, null=False)
     rol = models.CharField("Rol", max_length=15, null=False)
-    habilitado = models.BooleanField(str_habilitado, default=True, null=False)
+    habilitado = models.BooleanField(int_habilitado, default=True, null=False)
     created_at = models.DateTimeField(str_fecha_creacion, auto_now_add=True)
     updated_at = models.DateTimeField(str_fecha_actualizacion, auto_now=True)
 
@@ -30,7 +30,7 @@ class Ejercicio(models.Model):
     grupo_muscular = models.CharField("Grupo Muscular", max_length=50, null=False)
     es_publico = models.BooleanField("Es Público", default=True, null=False)
     creador = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE, null=True)
-    habilitado = models.BooleanField(str_habilitado, default=True, null=False)
+    habilitado = models.BooleanField(int_habilitado, default=True, null=False)
     created_at = models.DateTimeField(str_fecha_creacion, auto_now_add=True)
     updated_at = models.DateTimeField(str_fecha_actualizacion, auto_now=True)
 
@@ -44,7 +44,7 @@ class PlanEntrenamiento(models.Model):
     estado = models.CharField("Estado", max_length=15, null=False)
     fecha_inicio = models.DateField("Fecha Inicio", null=False)
     fecha_fin = models.DateField("Fecha Fin", null=True)
-    habilitado = models.BooleanField(str_habilitado, default=True, null=False)
+    habilitado = models.BooleanField(int_habilitado, default=True, null=False)
     created_at = models.DateTimeField(str_fecha_creacion, auto_now_add=True)
     updated_at = models.DateTimeField(str_fecha_actualizacion, auto_now=True)
 
@@ -59,7 +59,7 @@ class RutinaDetalle(models.Model):
     repeticiones = models.IntegerField("Repeticiones", null=False)
     peso_objetivo = models.DecimalField("Peso Objetivo", max_digits=5, decimal_places=2, null=True)
     descanso_segundos = models.IntegerField("Descanso Segundos", null=True)
-    habilitado = models.BooleanField(str_habilitado, default=True, null=False)
+    habilitado = models.BooleanField(int_habilitado, default=True, null=False)
     created_at = models.DateTimeField(str_fecha_creacion, auto_now_add=True)
     updated_at = models.DateTimeField(str_fecha_actualizacion, auto_now=True)
 
@@ -71,7 +71,7 @@ class ProgresoHistorico(models.Model):
     peso_kg = models.DecimalField("Peso (kg)", max_digits=5, decimal_places=2, null=False)
     porcentaje_grasa = models.DecimalField("Porcentaje Grasa", max_digits=4, decimal_places=2, null=True)
     observaciones = models.CharField(str_observaciones, max_length=255, null=True)
-    habilitado = models.BooleanField(str_habilitado, default=True, null=False)
+    habilitado = models.BooleanField(int_habilitado, default=True, null=False)
     created_at = models.DateTimeField(str_fecha_creacion, auto_now_add=True)
     updated_at = models.DateTimeField(str_fecha_actualizacion, auto_now=True)
 
