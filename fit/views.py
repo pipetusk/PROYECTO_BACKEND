@@ -10,7 +10,7 @@ from .models import (
     AuditoriaEstado
 )
 
-from .serializer import (
+from .serializers import (
     PerfilUsuarioSerializer, 
     EjercicioSerializer, 
     PlanEntrenamientoSerializer, 
