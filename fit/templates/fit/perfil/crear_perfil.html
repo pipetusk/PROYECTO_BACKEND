@@ -1,0 +1,35 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Formulario Perfil | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="text-fit-lime mb-4">{% if object %}Modificar{% else %}Agregar{% endif %} Perfil</h3>
+
+<div class="card card-fit p-4">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="{{ form.usuario.id_for_label }}" class="form-label text-light">Cuenta de Usuario (Base):</label>
+                {{ form.usuario }}
+            </div>
+            <div class="col-md-4">
+                <label for="{{ form.nombre_completo.id_for_label }}" class="form-label text-light">Nombre Completo:</label>
+                {{ form.nombre_completo }}
+            </div>
+            <div class="col-md-4">
+                <label for="{{ form.rol.id_for_label }}" class="form-label text-light">Rol (Ej: Entrenador, Atleta):</label>
+                {{ form.rol }}
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-fit">Guardar Perfil</button>
+            <a href="{% url 'listado_perfiles' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

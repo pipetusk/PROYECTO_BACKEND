@@ -1,0 +1,55 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Detalle de Ejercicio | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+
+<h3 class="text-fit-lime mb-4">Detalle de Ejercicio</h3>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold d-flex justify-content-between">
+                <span>{{ object.nombre }}</span>
+                <span>ID: {{ object.id }}</span>
+            </div>
+            <div class="card-body text-light">
+                <h6 class="card-title text-muted mb-1">Grupo Muscular:</h6>
+                <p class="card-text fs-5">{{ object.grupo_muscular }}</p>
+
+                <h6 class="card-title text-muted mb-1">Descripción:</h6>
+                <p class="card-text">{% if object.descripcion %}{{ object.descripcion }}{% else %}--{% endif %}</p>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Privacidad:</h6>
+                        <p class="card-text">{% if object.es_publico %}Público{% else %}Privado{% endif %}</p>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Creador:</h6>
+                        <p class="card-text">{% if object.creador %}{{ object.creador.nombre_completo }}{% else %}Sistema Central{% endif %}</p>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Fecha de Creación:</h6>
+                        <p class="card-text">{{ object.created_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Última Actualización:</h6>
+                        <p class="card-text">{{ object.updated_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-top border-secondary text-center">
+                <a href="{% url 'listado_ejercicios' %}" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

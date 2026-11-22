@@ -1,0 +1,57 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Rutinas de Entrenamiento | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="mb-4 text-fit-lime">Rutinas de Entrenamiento</h3>
+<br>
+<a href="{% url 'crear_rutina' %}" type="button" class="btn btn-fit mb-4">Crear Nueva Rutina</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for rutina in object_list %}
+    <div class="col">
+        <div class="card h-100 card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
+                {{ rutina.nombre }}
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-light mb-3">Plan: {{ rutina.plan.nombre }}</h5>
+                <div class="card-text text-light mb-3">
+                    <ul class="list-unstyled">
+                        <li><strong>Día(s):</strong> {% if rutina.dia_semana %}{{ rutina.dia_semana }}{% else %}No especificado{% endif %}</li>
+                        <li><strong>Descripción:</strong> 
+                            <span class="text-muted d-block text-truncate" style="max-width: 250px;">
+                                {% if rutina.descripcion %}{{ rutina.descripcion }}{% else %}Sin descripción{% endif %}
+                            </span>
+                        </li>
+                        <li class="mt-2"><strong>Estado:</strong> {% if rutina.habilitado %}<span class="text-success">Activa</span>{% else %}<span class="text-danger">Deshabilitada</span>{% endif %}</li>
+                    </ul>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'modificar_rutina' rutina.id %}" class="btn btn-secondary w-100">Editar</a>
+                    <a href="{% url 'detalle_rutina' rutina.id %}" class="btn btn-info w-100">Detalle</a>
+                    {% if rutina.habilitado %}
+                    <a href="{% url 'deshabilitar_rutina' rutina.id %}" class="btn btn-danger w-100">Deshabilitar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-muted border-top border-secondary small">
+                Actualizada: {{ rutina.updated_at|date:"d/m/Y H:i" }}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card card-fit">
+            <div class="card-body text-center p-5">
+                <h5 class="card-title text-muted">No hay rutinas</h5>
+                <p class="card-text text-muted">Aún no se han configurado rutinas para los planes de entrenamiento.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

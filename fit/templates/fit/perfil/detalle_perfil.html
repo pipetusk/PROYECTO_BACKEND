@@ -1,0 +1,45 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Detalle de Perfil | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="text-fit-lime mb-4">Detalle de Perfil</h3>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold d-flex justify-content-between">
+                <span>{{ object.nombre_completo }}</span>
+                <span>ID: {{ object.id }}</span>
+            </div>
+            <div class="card-body text-light">
+                <h6 class="card-title text-muted mb-1">Cuenta de Usuario (Login):</h6>
+                <p class="card-text fs-5">{{ object.usuario.username }}</p>
+
+                <h6 class="card-title text-muted mb-1">Rol en el Sistema:</h6>
+                <p class="card-text">{{ object.rol }}</p>
+
+                <h6 class="card-title text-muted mb-1">Estado:</h6>
+                <p class="card-text">{% if object.habilitado %}Activo{% else %}Deshabilitado{% endif %}</p>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Fecha de Creación:</h6>
+                        <p class="card-text">{{ object.created_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Última Actualización:</h6>
+                        <p class="card-text">{{ object.updated_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-top border-secondary text-center">
+                <a href="{% url 'listado_perfiles' %}" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

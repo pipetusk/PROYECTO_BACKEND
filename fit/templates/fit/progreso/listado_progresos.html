@@ -1,0 +1,58 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Progreso Histórico | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="mb-4 text-fit-lime">Progreso Histórico de Atletas</h3>
+<br>
+<a href="{% url 'crear_progreso' %}" type="button" class="btn btn-fit mb-4">Registrar Nuevo Control</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for progreso in object_list %}
+    <div class="col">
+        <div class="card h-100 card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
+                {{ progreso.cliente.nombre_completo }}
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-light mb-3">Registro: {{ progreso.created_at|date:"d/m/Y" }}</h5>
+                <div class="card-text text-light mb-3">
+                    <ul class="list-unstyled">
+                        <li><strong>Peso:</strong> <span class="fs-5 text-fit-lime">{{ progreso.peso_kg }} kg</span></li>
+                        <li><strong>Grasa Corporal:</strong> {% if progreso.porcentaje_grasa %}{{ progreso.porcentaje_grasa }}%{% else %}--{% endif %}</li>
+                        <li class="mt-2"><strong>Observaciones:</strong> 
+                            <span class="text-muted d-block text-truncate" style="max-width: 250px;">
+                                {% if progreso.observaciones %}{{ progreso.observaciones }}{% else %}Ninguna{% endif %}
+                            </span>
+                        </li>
+                        <li class="mt-2"><strong>Estado:</strong> {% if progreso.habilitado %}<span class="text-success">Válido</span>{% else %}<span class="text-danger">Deshabilitado</span>{% endif %}</li>
+                    </ul>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'modificar_progreso' progreso.id %}" class="btn btn-secondary w-100">Editar</a>
+                    <a href="{% url 'detalle_progreso' progreso.id %}" class="btn btn-info w-100">Detalle</a>
+                    {% if progreso.habilitado %}
+                    <a href="{% url 'deshabilitar_progreso' progreso.id %}" class="btn btn-danger w-100">Deshabilitar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-muted border-top border-secondary small">
+                Actualizado: {{ progreso.updated_at|date:"d/m/Y H:i" }}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card card-fit">
+            <div class="card-body text-center p-5">
+                <h5 class="card-title text-muted">No hay registros</h5>
+                <p class="card-text text-muted">Aún no se han registrado controles físicos en el sistema.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

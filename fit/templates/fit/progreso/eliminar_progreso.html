@@ -1,0 +1,29 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Deshabilitar Progreso | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="text-danger mb-4">Deshabilitar Registro de Control Físico</h3>
+
+<div class="card card-fit p-4 border-danger">
+    <div class="card-body text-center text-light">
+        <h5 class="mb-4">¿Estás seguro que deseas deshabilitar el registro de <strong>{{ object.peso_kg }} kg</strong> de {{ object.cliente.nombre_completo }}?</h5>
+        <p class="text-muted mb-4">Este control físico dejará de contabilizarse en las gráficas de progreso del atleta, pero se mantendrá en la base de datos.</p>
+        
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="d-none">
+                {{ form.as_p }}
+            </div>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-danger px-4">Confirmar Deshabilitación</button>
+                <a href="{% url 'listado_progresos' %}" class="btn btn-secondary px-4">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

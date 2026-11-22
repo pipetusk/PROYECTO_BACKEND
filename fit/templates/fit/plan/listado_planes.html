@@ -1,0 +1,55 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Planes de Entrenamiento | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="mb-4 text-fit-lime">Planes de Entrenamiento</h3>
+<br>
+<a href="{% url 'crear_plan' %}" type="button" class="btn btn-fit mb-4">Crear Nuevo Plan</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for plan in object_list %}
+    <div class="col">
+        <div class="card h-100 card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
+                {{ plan.nombre }}
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-light">Cliente: {{ plan.cliente.nombre_completo }}</h5>
+                <div class="card-text text-light mb-3">
+                    <ul class="list-unstyled">
+                        <li><strong>Entrenador:</strong> {% if plan.entrenador %}{{ plan.entrenador.nombre_completo }}{% else %}No asignado{% endif %}</li>
+                        <li><strong>Estado:</strong> <span class="badge bg-secondary">{{ plan.estado }}</span></li>
+                        <li><strong>Inicio:</strong> {{ plan.fecha_inicio|date:"d/m/Y" }}</li>
+                        <li><strong>Fin:</strong> {% if plan.fecha_fin %}{{ plan.fecha_fin|date:"d/m/Y" }}{% else %}Indefinido{% endif %}</li>
+                        <li class="mt-2"><strong>Habilitado:</strong> {% if plan.habilitado %}<span class="text-success">Sí</span>{% else %}<span class="text-danger">No</span>{% endif %}</li>
+                    </ul>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'modificar_plan' plan.id %}" class="btn btn-secondary w-100">Editar</a>
+                    <a href="{% url 'detalle_plan' plan.id %}" class="btn btn-info w-100">Detalle</a>
+                    {% if plan.habilitado %}
+                    <a href="{% url 'deshabilitar_plan' plan.id %}" class="btn btn-danger w-100">Deshabilitar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-muted border-top border-secondary small">
+                Actualizado: {{ plan.updated_at|date:"d/m/Y H:i" }}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card card-fit">
+            <div class="card-body text-center p-5">
+                <h5 class="card-title text-muted">No hay planes</h5>
+                <p class="card-text text-muted">Aún no se han asignado planes de entrenamiento.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

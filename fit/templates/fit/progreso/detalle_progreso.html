@@ -1,0 +1,56 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Detalle de Progreso | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="text-fit-lime mb-4">Detalle del Registro Físico</h3>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold d-flex justify-content-between">
+                <span>Atleta: {{ object.cliente.nombre_completo }}</span>
+                <span>ID: {{ object.id }}</span>
+            </div>
+            <div class="card-body text-light">
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Peso Registrado:</h6>
+                        <p class="card-text fs-4 text-fit-lime fw-bold">{{ object.peso_kg }} kg</p>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="card-title text-muted mb-1">Grasa Corporal:</h6>
+                        <p class="card-text fs-4 text-fit-lime fw-bold">{% if object.porcentaje_grasa %}{{ object.porcentaje_grasa }}%{% else %}--{% endif %}</p>
+                    </div>
+                </div>
+
+                <h6 class="card-title text-muted mb-1">Observaciones:</h6>
+                <p class="card-text p-3 bg-dark border border-secondary rounded">{% if object.observaciones %}{{ object.observaciones }}{% else %}No se añadieron observaciones en este control.{% endif %}</p>
+
+                <hr class="border-secondary mt-4">
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <h6 class="card-title text-muted mb-1">Estado de Registro:</h6>
+                        <p class="card-text">{% if object.habilitado %}Válido{% else %}Deshabilitado{% endif %}</p>
+                    </div>
+                    <div class="col-4">
+                        <h6 class="card-title text-muted mb-1">Fecha del Control:</h6>
+                        <p class="card-text">{{ object.created_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    <div class="col-4">
+                        <h6 class="card-title text-muted mb-1">Última Edición:</h6>
+                        <p class="card-text">{{ object.updated_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-top border-secondary text-center">
+                <a href="{% url 'listado_progresos' %}" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Catálogo de Ejercicios | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+
+<h3 class="mb-4 text-fit-lime">Catálogo de Ejercicios</h3>
+<br>
+<a href="{% url 'crear_ejercicio' %}" type="button" class="btn btn-fit mb-4">Agregar Ejercicio</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    {% for ejercicio in object_list %}
+    <div class="col">
+        <div class="card h-100 card-fit">
+            <!-- CAMBIO AQUÍ: Ahora el nombre va en el encabezado verde -->
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
+                {{ ejercicio.nombre }}
+            </div>
+            <div class="card-body d-flex flex-column">
+                <!-- Y el grupo muscular va como título secundario -->
+                <h5 class="card-title text-light">{{ ejercicio.grupo_muscular }}</h5>
+                <p class="card-text text-muted">
+                    {% if ejercicio.descripcion %}{{ ejercicio.descripcion|truncatechars:50 }}{% else %}Sin descripción.{% endif %}
+                </p>
+                <div class="card-text text-light mb-3">
+                    <ul class="list-unstyled">
+                        <li><strong>Público:</strong> {% if ejercicio.es_publico %}<span class="badge bg-success text-dark">Sí</span>{% else %}<span class="badge bg-secondary">No</span>{% endif %}</li>
+                        <li><strong>Creador:</strong> {% if ejercicio.creador %}{{ ejercicio.creador.nombre_completo }}{% else %}Sistema{% endif %}</li>
+                        <li><strong>Estado:</strong> {% if ejercicio.habilitado %}Activo{% else %}<span class="text-danger">Deshabilitado</span>{% endif %}</li>
+                    </ul>
+                </div>
+                
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'modificar_ejercicio' ejercicio.id %}" class="btn btn-secondary w-100">Editar</a>
+                    <a href="{% url 'detalle_ejercicio' ejercicio.id %}" class="btn btn-info w-100">Detalle</a>
+                    {% if ejercicio.habilitado %}
+                    <a href="{% url 'deshabilitar_ejercicio' ejercicio.id %}" class="btn btn-danger w-100">Deshabilitar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-muted border-top border-secondary small">
+                Agregado: {{ ejercicio.created_at|date:"d/m/Y" }}
+            </div>
+        </div>
+    </div>
+
+    {% empty %}
+    <div class="col-12">
+        <div class="card card-fit">
+            <div class="card-header border-bottom border-secondary">
+                Catálogo
+            </div>
+            <div class="card-body text-center p-5">
+                <h5 class="card-title text-muted">No hay Datos</h5>
+                <p class="card-text text-muted">No se han encontrado ejercicios registrados.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

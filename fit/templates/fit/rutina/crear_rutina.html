@@ -1,0 +1,58 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Formulario de Detalle de Rutina | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="text-fit-lime mb-4">{% if object %}Modificar{% else %}Asignar Ejercicio a{% endif %} Rutina</h3>
+
+<div class="card card-fit p-4">
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="{{ form.plan.id_for_label }}" class="form-label text-light">Plan de Entrenamiento:</label>
+                {{ form.plan }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.ejercicio.id_for_label }}" class="form-label text-light">Ejercicio:</label>
+                {{ form.ejercicio }}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="{{ form.dia_semana.id_for_label }}" class="form-label text-light">Día de la semana (1 al 7):</label>
+                {{ form.dia_semana }}
+            </div>
+            <div class="col-md-4">
+                <label for="{{ form.series.id_for_label }}" class="form-label text-light">Series:</label>
+                {{ form.series }}
+            </div>
+            <div class="col-md-4">
+                <label for="{{ form.repeticiones.id_for_label }}" class="form-label text-light">Repeticiones:</label>
+                {{ form.repeticiones }}
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="{{ form.peso_objetivo.id_for_label }}" class="form-label text-light">Peso Objetivo en kg (Opcional):</label>
+                {{ form.peso_objetivo }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.descanso_segundos.id_for_label }}" class="form-label text-light">Descanso en segundos (Opcional):</label>
+                {{ form.descanso_segundos }}
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-fit">Guardar en Rutina</button>
+            <a href="{% url 'listado_rutinas' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

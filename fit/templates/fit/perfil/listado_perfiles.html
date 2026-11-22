@@ -1,0 +1,53 @@
+{% extends 'fit/base.html' %}
+{% load static %}
+
+{% block titulo %}
+<title>Perfiles de Usuario | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<h3 class="mb-4 text-fit-lime">Perfiles de Usuario</h3>
+<br>
+<a href="{% url 'crear_perfil' %}" type="button" class="btn btn-fit mb-4">Agregar Perfil</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for perfil in object_list %}
+    <div class="col">
+        <div class="card h-100 card-fit">
+            <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
+                {{ perfil.rol }}
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-light">{{ perfil.nombre_completo }}</h5>
+                <div class="card-text text-light mb-3">
+                    <ul class="list-unstyled">
+                        <li><strong>Usuario (Login):</strong> {{ perfil.usuario.username }}</li>
+                        <li><strong>Rol:</strong> <span class="badge bg-secondary">{{ perfil.rol }}</span></li>
+                        <li><strong>Estado:</strong> {% if perfil.habilitado %}<span class="text-success">Activo</span>{% else %}<span class="text-danger">Deshabilitado</span>{% endif %}</li>
+                    </ul>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="{% url 'modificar_perfil' perfil.id %}" class="btn btn-secondary w-100">Editar</a>
+                    <a href="{% url 'detalle_perfil' perfil.id %}" class="btn btn-info w-100">Detalle</a>
+                    {% if perfil.habilitado %}
+                    <a href="{% url 'deshabilitar_perfil' perfil.id %}" class="btn btn-danger w-100">Deshabilitar</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer text-muted border-top border-secondary small">
+                Agregado: {{ perfil.created_at|date:"d/m/Y" }}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="card card-fit">
+            <div class="card-body text-center p-5">
+                <h5 class="card-title text-muted">No hay perfiles</h5>
+                <p class="card-text text-muted">No se han encontrado usuarios registrados.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

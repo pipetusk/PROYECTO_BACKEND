@@ -2,7 +2,7 @@ from django import forms
 from . import models as mod
 
 # --- PERFIL USUARIO ---
-class PerfilUsuarioForm(forms.ModelForm):
+class PerfilForm(forms.ModelForm):
     class Meta:
         model = mod.PerfilUsuario
         fields = ['usuario', 'nombre_completo', 'rol']
@@ -20,7 +20,7 @@ class PerfilUsuarioForm(forms.ModelForm):
             }),
         }
 
-class DeshabilitarPerfilUsuarioForm(forms.ModelForm):
+class DeshabilitarPerfilForm(forms.ModelForm):
     class Meta:
         model = mod.PerfilUsuario
         fields = ['habilitado']
@@ -60,7 +60,7 @@ class DeshabilitarEjercicioForm(forms.ModelForm):
 
 
 # --- PLAN ENTRENAMIENTO ---
-class PlanEntrenamientoForm(forms.ModelForm):
+class PlanForm(forms.ModelForm):
     class Meta:
         model = mod.PlanEntrenamiento
         fields = ['cliente', 'entrenador', 'nombre', 'estado', 'fecha_inicio', 'fecha_fin']
@@ -87,14 +87,14 @@ class PlanEntrenamientoForm(forms.ModelForm):
             ),
         }
 
-class DeshabilitarPlanEntrenamientoForm(forms.ModelForm):
+class DeshabilitarPlanForm(forms.ModelForm):
     class Meta:
         model = mod.PlanEntrenamiento
         fields = ['habilitado']
 
 
 # --- RUTINA DETALLE ---
-class RutinaDetalleForm(forms.ModelForm):
+class RutinaForm(forms.ModelForm):
     class Meta:
         model = mod.RutinaDetalle
         fields = ['plan', 'ejercicio', 'dia_semana', 'series', 'repeticiones', 'peso_objetivo', 'descanso_segundos']
@@ -129,14 +129,14 @@ class RutinaDetalleForm(forms.ModelForm):
             }),
         }
 
-class DeshabilitarRutinaDetalleForm(forms.ModelForm):
+class DeshabilitarRutinaForm(forms.ModelForm):
     class Meta:
         model = mod.RutinaDetalle
         fields = ['habilitado']
 
 
 # --- PROGRESO HISTÓRICO ---
-class ProgresoHistoricoForm(forms.ModelForm):
+class ProgresoForm(forms.ModelForm):
     class Meta:
         model = mod.ProgresoHistorico
         fields = ['cliente', 'peso_kg', 'porcentaje_grasa', 'observaciones']
@@ -159,7 +159,7 @@ class ProgresoHistoricoForm(forms.ModelForm):
             }),
         }
 
-class DeshabilitarProgresoHistoricoForm(forms.ModelForm):
+class DeshabilitarProgresoForm(forms.ModelForm):
     class Meta:
         model = mod.ProgresoHistorico
         fields = ['habilitado']
