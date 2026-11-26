@@ -10,8 +10,8 @@
 
 <div class="card card-fit p-4 border-danger">
     <div class="card-body text-center text-light">
-        <h5 class="mb-4">¿Estás seguro que deseas deshabilitar la rutina <strong>"{{ object.nombre }}"</strong>?</h5>
-        <p class="text-muted mb-4">Al hacer esto, la rutina dejará de estar visible en el plan "{{ object.plan.nombre }}", pero se conservará en el sistema por historial.</p>
+        <h5 class="mb-4">¿Estás seguro que deseas deshabilitar el ejercicio <strong>"{{ object.ejercicio.nombre }}"</strong> (Día {{ object.dia_semana }}) de la rutina?</h5>
+        <p class="text-muted mb-4">Al hacer esto, el detalle dejará de estar activo en el plan "{{ object.plan.nombre }}", pero se conservará en el sistema por historial.</p>
         
         <form action="" method="post">
             {% csrf_token %}

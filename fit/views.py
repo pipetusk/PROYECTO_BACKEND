@@ -84,6 +84,10 @@ class EjercicioDeshabilitarView(UpdateView):
     success_url = reverse_lazy('listado_ejercicios')
     template_name = 'fit/ejercicio/eliminar_ejercicio.html'
 
+    def form_valid(self, form):
+        form.instance.habilitado = False
+        return super().form_valid(form)
+
 # -- PERFILES --
 class PerfilListView(ListView):
     model = PerfilUsuario
@@ -111,6 +115,10 @@ class PerfilDeshabilitarView(UpdateView):
     success_url = reverse_lazy('listado_perfiles')
     template_name = 'fit/perfil/eliminar_perfil.html'
 
+    def form_valid(self, form):
+        form.instance.habilitado = False
+        return super().form_valid(form)
+
 # -- PLANES DE ENTRENAMIENTO --
 class PlanListView(ListView):
     model = PlanEntrenamiento
@@ -122,11 +130,34 @@ class PlanCreateView(CreateView):
     success_url = reverse_lazy('listado_planes')
     template_name = 'fit/plan/crear_plan.html'
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        AuditoriaEstado.objects.create(
+            plan=self.object,
+            estado_anterior='Nuevo',
+            estado_nuevo=self.object.estado,
+            modificado_por=self.object.entrenador or self.object.cliente,
+            motivo='Creación inicial del plan de entrenamiento.'
+        )
+        return response
+
 class PlanUpdateView(UpdateView):
     model = PlanEntrenamiento
     form_class = forms.PlanForm
     success_url = reverse_lazy('listado_planes')
     template_name = 'fit/plan/crear_plan.html'
+
+    def form_valid(self, form):
+        estado_previo = PlanEntrenamiento.objects.get(pk=self.object.pk).estado
+        response = super().form_valid(form)
+        AuditoriaEstado.objects.create(
+            plan=self.object,
+            estado_anterior=estado_previo,
+            estado_nuevo=self.object.estado,
+            modificado_por=self.object.entrenador or self.object.cliente,
+            motivo='Actualización del plan de entrenamiento.'
+        )
+        return response
 
 class PlanDetailView(DetailView):
     model = PlanEntrenamiento
@@ -137,6 +168,20 @@ class PlanDeshabilitarView(UpdateView):
     form_class = forms.DeshabilitarPlanForm
     success_url = reverse_lazy('listado_planes')
     template_name = 'fit/plan/eliminar_plan.html'
+
+    def form_valid(self, form):
+        estado_previo = PlanEntrenamiento.objects.get(pk=self.object.pk).estado
+        form.instance.habilitado = False
+        form.instance.estado = 'Deshabilitado'
+        response = super().form_valid(form)
+        AuditoriaEstado.objects.create(
+            plan=self.object,
+            estado_anterior=estado_previo,
+            estado_nuevo='Deshabilitado',
+            modificado_por=self.object.entrenador or self.object.cliente,
+            motivo='Deshabilitación lógica del plan de entrenamiento.'
+        )
+        return response
 
 # -- RUTINAS --
 class RutinaListView(ListView):
@@ -165,6 +210,10 @@ class RutinaDeshabilitarView(UpdateView):
     success_url = reverse_lazy('listado_rutinas')
     template_name = 'fit/rutina/eliminar_rutina.html'
 
+    def form_valid(self, form):
+        form.instance.habilitado = False
+        return super().form_valid(form)
+
 # -- PROGRESOS --
 class ProgresoListView(ListView):
     model = ProgresoHistorico
@@ -191,3 +240,7 @@ class ProgresoDeshabilitarView(UpdateView):
     form_class = forms.DeshabilitarProgresoForm
     success_url = reverse_lazy('listado_progresos')
     template_name = 'fit/progreso/eliminar_progreso.html'
+
+    def form_valid(self, form):
+        form.instance.habilitado = False
+        return super().form_valid(form)

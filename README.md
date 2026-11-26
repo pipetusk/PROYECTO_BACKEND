@@ -70,3 +70,9 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+## Justificación Técnica de Vistas (Evaluación N° 3)
+
+- **Entidad `AuditoriaEstado` (Solo lectura mediante `ListView`):**
+  De acuerdo con las reglas de negocio del sistema **FIT.CORE**, el modelo `AuditoriaEstado` actúa como una bitácora histórica inmutable (log de auditoría) sobre las transiciones de estado en los planes de entrenamiento. Por integridad y trazabilidad de los datos, los registros de auditoría no deben ser modificados, eliminados ni alterados manualmente por los usuarios desde la interfaz web; por esta razón técnica, únicamente se expone su vista de consulta (`AuditoriaListView`) y se omiten las vistas de modificación y eliminación (`UpdateView` y `DeleteView`).
+
+

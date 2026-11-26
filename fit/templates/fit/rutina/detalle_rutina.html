@@ -12,7 +12,7 @@
     <div class="col-md-8 mx-auto">
         <div class="card card-fit">
             <div class="card-header border-bottom border-secondary text-fit-lime fw-bold d-flex justify-content-between">
-                <span>{{ object.nombre }}</span>
+                <span>{{ object.ejercicio.nombre }}</span>
                 <span>ID: {{ object.id }}</span>
             </div>
             <div class="card-body text-light">
@@ -23,12 +23,28 @@
                     </div>
                     <div class="col-6">
                         <h6 class="card-title text-muted mb-1">Día asignado:</h6>
-                        <p class="card-text fs-5 text-fit-lime">{% if object.dia_semana %}{{ object.dia_semana }}{% else %}No especificado{% endif %}</p>
+                        <p class="card-text fs-5 text-fit-lime">Día {{ object.dia_semana }}</p>
                     </div>
                 </div>
 
-                <h6 class="card-title text-muted mb-1">Descripción:</h6>
-                <p class="card-text p-3 bg-dark border border-secondary rounded">{% if object.descripcion %}{{ object.descripcion }}{% else %}Sin descripción detallada.{% endif %}</p>
+                <div class="row mb-4">
+                    <div class="col-3">
+                        <h6 class="card-title text-muted mb-1">Series:</h6>
+                        <p class="card-text fs-5">{{ object.series }}</p>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="card-title text-muted mb-1">Repeticiones:</h6>
+                        <p class="card-text fs-5">{{ object.repeticiones }}</p>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="card-title text-muted mb-1">Peso Objetivo:</h6>
+                        <p class="card-text fs-5">{% if object.peso_objetivo %}{{ object.peso_objetivo }} kg{% else %}--{% endif %}</p>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="card-title text-muted mb-1">Descanso:</h6>
+                        <p class="card-text fs-5">{% if object.descanso_segundos %}{{ object.descanso_segundos }} seg{% else %}--{% endif %}</p>
+                    </div>
+                </div>
 
                 <hr class="border-secondary mt-4">
 

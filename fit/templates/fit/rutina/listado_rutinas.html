@@ -15,18 +15,16 @@
     <div class="col">
         <div class="card h-100 card-fit">
             <div class="card-header border-bottom border-secondary text-fit-lime fw-bold">
-                {{ rutina.nombre }}
+                {{ rutina.ejercicio.nombre }}
             </div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-light mb-3">Plan: {{ rutina.plan.nombre }}</h5>
                 <div class="card-text text-light mb-3">
                     <ul class="list-unstyled">
-                        <li><strong>Día(s):</strong> {% if rutina.dia_semana %}{{ rutina.dia_semana }}{% else %}No especificado{% endif %}</li>
-                        <li><strong>Descripción:</strong> 
-                            <span class="text-muted d-block text-truncate" style="max-width: 250px;">
-                                {% if rutina.descripcion %}{{ rutina.descripcion }}{% else %}Sin descripción{% endif %}
-                            </span>
-                        </li>
+                        <li><strong>Día Semana:</strong> Día {{ rutina.dia_semana }}</li>
+                        <li><strong>Series x Reps:</strong> {{ rutina.series }} x {{ rutina.repeticiones }}</li>
+                        <li><strong>Peso Objetivo:</strong> {% if rutina.peso_objetivo %}{{ rutina.peso_objetivo }} kg{% else %}--{% endif %}</li>
+                        <li><strong>Descanso:</strong> {% if rutina.descanso_segundos %}{{ rutina.descanso_segundos }} seg{% else %}--{% endif %}</li>
                         <li class="mt-2"><strong>Estado:</strong> {% if rutina.habilitado %}<span class="text-success">Activa</span>{% else %}<span class="text-danger">Deshabilitada</span>{% endif %}</li>
                     </ul>
                 </div>
