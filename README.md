@@ -43,13 +43,7 @@ Pasos para levantar el entorno virtual desde 0:
 
 **RECUERDA** iniciar WampServer antes de iniciar.
 
-1. Crear la base de datos en el WAMPSERVER, con MySQL. Agrupé todos los comandos para hacer todo de una.
-```
-CREATE DATABASE IF NOT EXISTS fitness_db;
-CREATE USER IF NOT EXISTS 'Fitness'@'%' IDENTIFIED BY 'fit12345';
-GRANT ALL PRIVILEGES ON fitness_db.* TO 'Fitness'@'%';
-FLUSH PRIVILEGES;
-```
+1. Crear la base de datos y el usuario en MySQL ejecutando el script `database.sql` incluido en la raíz del proyecto (las credenciales de conexión se configuran en el archivo `.env`).
 
 2. Aplica el `migrate` para poder clonar los datos de la base de datos:
 

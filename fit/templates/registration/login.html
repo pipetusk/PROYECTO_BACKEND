@@ -1,0 +1,52 @@
+{% extends "fit/base.html" %}
+
+{% block titulo %}
+<title>Iniciar Sesión | FIT.CORE</title>
+{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center py-5">
+    <div class="col-12 col-md-6 col-lg-5">
+        <div class="card card-fit p-4 p-md-5 shadow-lg">
+            <div class="text-center mb-4">
+                <div class="fit-logo-box mx-auto mb-3">F</div>
+                <h3 class="fw-bold text-white mb-1">Acceso a <span class="text-fit-lime">FIT.CORE</span></h3>
+                <p class="text-muted small mb-0">Ingresa tus credenciales para gestionar rutinas y auditoría</p>
+            </div>
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="username" class="form-label text-light fw-semibold small">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" class="form-control bg-dark text-light border-secondary" placeholder="Tu usuario..." required autofocus />
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label text-light fw-semibold small">Contraseña:</label>
+                    <input type="password" id="password" name="password" class="form-control bg-dark text-light border-secondary" placeholder="••••••••" required />
+                </div>
+
+                {% if form.errors %}
+                <div class="alert alert-danger border-danger bg-dark text-danger small py-2 mb-3">
+                    Tu nombre de usuario y contraseña no coinciden. Inténtalo nuevamente.
+                    <div class="error">{{ form.non_field_errors }}</div>
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-fit w-100 py-2 mb-3">Iniciar Sesión</button>
+            </form>
+
+            <div class="text-center border-top border-secondary pt-3 mt-2">
+                <p class="small text-muted mb-1">
+                    <a href="{% url 'password_reset' %}" class="text-zinc-400 hover:text-lime-400 text-decoration-none">¿Olvidaste tu contraseña?</a>
+                </p>
+                <p class="small text-muted mb-0">
+                    ¿No tienes una cuenta?
+                    <a href="{% url 'registro' %}" class="text-fit-lime fw-bold text-decoration-none">Regístrate aquí</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

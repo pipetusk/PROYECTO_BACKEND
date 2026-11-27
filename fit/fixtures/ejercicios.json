@@ -1,0 +1,30 @@
+[
+    {
+        "model": "fit.ejercicio",
+        "pk": 1,
+        "fields": {
+            "nombre": "Press de Banca Plano",
+            "descripcion": "Ejercicio compuesto de empuje horizontal con barra sobre banco plano.",
+            "grupo_muscular": "Pecho",
+            "es_publico": true,
+            "creador": null,
+            "habilitado": true,
+            "created_at": "2026-10-15T10:00:00Z",
+            "updated_at": "2026-10-15T10:00:00Z"
+        }
+    },
+    {
+        "model": "fit.ejercicio",
+        "pk": 2,
+        "fields": {
+            "nombre": "Sentadilla Libre con Barra",
+            "descripcion": "Ejercicio multiarticular de tren inferior enfocado en cuádriceps y glúteos.",
+            "grupo_muscular": "Piernas",
+            "es_publico": true,
+            "creador": null,
+            "habilitado": true,
+            "created_at": "2026-10-15T10:00:00Z",
+            "updated_at": "2026-10-15T10:00:00Z"
+        }
+    }
+]

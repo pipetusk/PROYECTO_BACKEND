@@ -1,4 +1,7 @@
 ambiente/
 __pycache__/
+*.py[cod]
 db.sqlite3
 CONTEXTO/
+.env
+database.sql

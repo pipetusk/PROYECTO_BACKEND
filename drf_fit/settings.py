@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -110,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-cl'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -137,4 +137,22 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+# Autenticación y redirección
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Configuración de Sesiones
+SESSION_COOKIE_AGE = 3600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Control de Fechas Global (DRF)
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
+    'DATETIME_INPUT_FORMATS': ['%d-%m-%Y %H:%M:%S', '%d-%m-%Y', 'iso-8601'],
+    'DATE_FORMAT': '%d-%m-%Y',
+    'DATE_INPUT_FORMATS': ['%d-%m-%Y', '%Y-%m-%d', 'iso-8601'],
 }

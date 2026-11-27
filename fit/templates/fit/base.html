@@ -80,12 +80,24 @@
 
                     <!-- Perfil / Acceso -->
                     <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                        {% if request.user.is_authenticated %}
                         <span class="badge-rol d-none d-sm-inline-block">
-                            Rol: Administrador
+                            Usuario: <strong class="text-fit-lime">{{ request.user.username }}</strong>
                         </span>
-                        <a href="#" class="btn-fit text-decoration-none">
-                            Ingresar
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-fit">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                        {% else %}
+                        <a href="{% url 'registro' %}" class="nav-link text-decoration-none">
+                            Registrarse
                         </a>
+                        <a href="{% url 'login' %}" class="btn-fit text-decoration-none">
+                            Iniciar sesión
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -94,6 +106,16 @@
 
     <!-- Contenido Principal -->
     <main class="container flex-grow-1 py-4">
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="alert {% if message.tags == 'error' %}alert-danger border-danger{% else %}alert-success border-success{% endif %} alert-dismissible fade show card-fit text-light" role="alert">
+                <strong class="text-fit-lime">FIT.CORE:</strong> {{ message }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <div class="hero-content">
             <!-- AQUÍ ES DONDE SE INYECTA EL INDEX.HTML -->
             {% block contenido %}

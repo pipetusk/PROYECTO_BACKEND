@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Importamos los modelos y serializadores de tu app
 from .models import (
@@ -20,26 +27,38 @@ from . import forms
 # 1. VISTAS DE LA API REST (ViewSets)
 # ==========================================
 class PerfilUsuarioViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = PerfilUsuario.objects.all()
     serializer_class = PerfilUsuarioSerializer
 
 class EjercicioViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Ejercicio.objects.all()
     serializer_class = EjercicioSerializer
 
 class PlanEntrenamientoViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = PlanEntrenamiento.objects.all()
     serializer_class = PlanEntrenamientoSerializer
 
 class RutinaDetalleViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = RutinaDetalle.objects.all()
     serializer_class = RutinaDetalleSerializer
 
 class ProgresoHistoricoViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = ProgresoHistorico.objects.all()
     serializer_class = ProgresoHistoricoSerializer
 
 class AuditoriaEstadoViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = AuditoriaEstado.objects.all()
     serializer_class = AuditoriaEstadoSerializer
 
@@ -48,37 +67,37 @@ class AuditoriaEstadoViewSet(viewsets.ModelViewSet):
 # 2. VISTAS BASADAS EN CLASES (CRUD WEB)
 # ==========================================
 
-# -- INICIO --
+# -- INICIO (VISTA PÚBLICA) --
 class IndexView(TemplateView):
     template_name = 'fit/index.html'
 
 # -- AUDITORÍA --
-class AuditoriaListView(ListView):
+class AuditoriaListView(LoginRequiredMixin, ListView):
     model = AuditoriaEstado
     template_name = 'fit/auditoria/listado_auditorias.html'
 
 # -- EJERCICIOS --
-class EjercicioListView(ListView):
+class EjercicioListView(LoginRequiredMixin, ListView):
     model = Ejercicio
     template_name = 'fit/ejercicio/listado_ejercicios.html'
 
-class EjercicioCreateView(CreateView):
+class EjercicioCreateView(LoginRequiredMixin, CreateView):
     model = Ejercicio
     form_class = forms.EjercicioForm
     success_url = reverse_lazy('listado_ejercicios')
     template_name = 'fit/ejercicio/crear_ejercicio.html'
 
-class EjercicioUpdateView(UpdateView):
+class EjercicioUpdateView(LoginRequiredMixin, UpdateView):
     model = Ejercicio
     form_class = forms.EjercicioForm
     success_url = reverse_lazy('listado_ejercicios')
     template_name = 'fit/ejercicio/crear_ejercicio.html'
 
-class EjercicioDetailView(DetailView):
+class EjercicioDetailView(LoginRequiredMixin, DetailView):
     model = Ejercicio
     template_name = 'fit/ejercicio/detalle_ejercicio.html'
 
-class EjercicioDeshabilitarView(UpdateView):
+class EjercicioDeshabilitarView(LoginRequiredMixin, UpdateView):
     model = Ejercicio
     form_class = forms.DeshabilitarEjercicioForm
     success_url = reverse_lazy('listado_ejercicios')
@@ -89,27 +108,27 @@ class EjercicioDeshabilitarView(UpdateView):
         return super().form_valid(form)
 
 # -- PERFILES --
-class PerfilListView(ListView):
+class PerfilListView(LoginRequiredMixin, ListView):
     model = PerfilUsuario
     template_name = 'fit/perfil/listado_perfiles.html'
 
-class PerfilCreateView(CreateView):
+class PerfilCreateView(LoginRequiredMixin, CreateView):
     model = PerfilUsuario
     form_class = forms.PerfilForm
     success_url = reverse_lazy('listado_perfiles')
     template_name = 'fit/perfil/crear_perfil.html'
 
-class PerfilUpdateView(UpdateView):
+class PerfilUpdateView(LoginRequiredMixin, UpdateView):
     model = PerfilUsuario
     form_class = forms.PerfilForm
     success_url = reverse_lazy('listado_perfiles')
     template_name = 'fit/perfil/crear_perfil.html'
 
-class PerfilDetailView(DetailView):
+class PerfilDetailView(LoginRequiredMixin, DetailView):
     model = PerfilUsuario
     template_name = 'fit/perfil/detalle_perfil.html'
 
-class PerfilDeshabilitarView(UpdateView):
+class PerfilDeshabilitarView(LoginRequiredMixin, UpdateView):
     model = PerfilUsuario
     form_class = forms.DeshabilitarPerfilForm
     success_url = reverse_lazy('listado_perfiles')
@@ -120,11 +139,11 @@ class PerfilDeshabilitarView(UpdateView):
         return super().form_valid(form)
 
 # -- PLANES DE ENTRENAMIENTO --
-class PlanListView(ListView):
+class PlanListView(LoginRequiredMixin, ListView):
     model = PlanEntrenamiento
     template_name = 'fit/plan/listado_planes.html'
 
-class PlanCreateView(CreateView):
+class PlanCreateView(LoginRequiredMixin, CreateView):
     model = PlanEntrenamiento
     form_class = forms.PlanForm
     success_url = reverse_lazy('listado_planes')
@@ -141,7 +160,7 @@ class PlanCreateView(CreateView):
         )
         return response
 
-class PlanUpdateView(UpdateView):
+class PlanUpdateView(LoginRequiredMixin, UpdateView):
     model = PlanEntrenamiento
     form_class = forms.PlanForm
     success_url = reverse_lazy('listado_planes')
@@ -159,11 +178,11 @@ class PlanUpdateView(UpdateView):
         )
         return response
 
-class PlanDetailView(DetailView):
+class PlanDetailView(LoginRequiredMixin, DetailView):
     model = PlanEntrenamiento
     template_name = 'fit/plan/detalle_plan.html'
 
-class PlanDeshabilitarView(UpdateView):
+class PlanDeshabilitarView(LoginRequiredMixin, UpdateView):
     model = PlanEntrenamiento
     form_class = forms.DeshabilitarPlanForm
     success_url = reverse_lazy('listado_planes')
@@ -184,27 +203,27 @@ class PlanDeshabilitarView(UpdateView):
         return response
 
 # -- RUTINAS --
-class RutinaListView(ListView):
+class RutinaListView(LoginRequiredMixin, ListView):
     model = RutinaDetalle
     template_name = 'fit/rutina/listado_rutinas.html'
 
-class RutinaCreateView(CreateView):
+class RutinaCreateView(LoginRequiredMixin, CreateView):
     model = RutinaDetalle
     form_class = forms.RutinaForm
     success_url = reverse_lazy('listado_rutinas')
     template_name = 'fit/rutina/crear_rutina.html'
 
-class RutinaUpdateView(UpdateView):
+class RutinaUpdateView(LoginRequiredMixin, UpdateView):
     model = RutinaDetalle
     form_class = forms.RutinaForm
     success_url = reverse_lazy('listado_rutinas')
     template_name = 'fit/rutina/crear_rutina.html'
 
-class RutinaDetailView(DetailView):
+class RutinaDetailView(LoginRequiredMixin, DetailView):
     model = RutinaDetalle
     template_name = 'fit/rutina/detalle_rutina.html'
 
-class RutinaDeshabilitarView(UpdateView):
+class RutinaDeshabilitarView(LoginRequiredMixin, UpdateView):
     model = RutinaDetalle
     form_class = forms.DeshabilitarRutinaForm
     success_url = reverse_lazy('listado_rutinas')
@@ -215,27 +234,27 @@ class RutinaDeshabilitarView(UpdateView):
         return super().form_valid(form)
 
 # -- PROGRESOS --
-class ProgresoListView(ListView):
+class ProgresoListView(LoginRequiredMixin, ListView):
     model = ProgresoHistorico
     template_name = 'fit/progreso/listado_progresos.html'
 
-class ProgresoCreateView(CreateView):
+class ProgresoCreateView(LoginRequiredMixin, CreateView):
     model = ProgresoHistorico
     form_class = forms.ProgresoForm
     success_url = reverse_lazy('listado_progresos')
     template_name = 'fit/progreso/crear_progreso.html'
 
-class ProgresoUpdateView(UpdateView):
+class ProgresoUpdateView(LoginRequiredMixin, UpdateView):
     model = ProgresoHistorico
     form_class = forms.ProgresoForm
     success_url = reverse_lazy('listado_progresos')
     template_name = 'fit/progreso/crear_progreso.html'
 
-class ProgresoDetailView(DetailView):
+class ProgresoDetailView(LoginRequiredMixin, DetailView):
     model = ProgresoHistorico
     template_name = 'fit/progreso/detalle_progreso.html'
 
-class ProgresoDeshabilitarView(UpdateView):
+class ProgresoDeshabilitarView(LoginRequiredMixin, UpdateView):
     model = ProgresoHistorico
     form_class = forms.DeshabilitarProgresoForm
     success_url = reverse_lazy('listado_progresos')
@@ -244,3 +263,22 @@ class ProgresoDeshabilitarView(UpdateView):
     def form_valid(self, form):
         form.instance.habilitado = False
         return super().form_valid(form)
+
+
+# ==========================================
+# 3. VISTAS DE AUTENTICACIÓN Y REGISTRO (FBV)
+# ==========================================
+def registro(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            request.session['mensaje_bienvenida'] = '¡Bienvenido!'
+            messages.success(request, "Registro Exitoso. ¡Bienvenido!")
+            return redirect('/')
+        else:
+            messages.error(request, "No ha sido posible Registrarlo. Por favor revise el formulario por errores.")
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/registro.html', {'form': form})

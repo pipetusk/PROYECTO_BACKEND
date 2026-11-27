@@ -1,0 +1,80 @@
+{% extends "fit/base.html" %}
+
+{% block titulo %}
+<title>Registro de Usuario | FIT.CORE</title>
+{% endblock %}
+
+{% block estilos %}
+<style>
+    .fit-registro-form p {
+        margin-bottom: 1rem;
+    }
+    .fit-registro-form label {
+        display: block;
+        color: #f4f4f5;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.35rem;
+    }
+    .fit-registro-form input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        background-color: #09090b;
+        border: 1px solid #3f3f46;
+        border-radius: 0.5rem;
+        color: #f4f4f5;
+    }
+    .fit-registro-form input:focus {
+        outline: none;
+        border-color: #a3e635;
+    }
+    .fit-registro-form .helptext,
+    .fit-registro-form ul {
+        display: block;
+        color: #a1a1aa;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+        padding-left: 1rem;
+    }
+    .fit-registro-form .errorlist {
+        color: #f87171;
+        font-size: 0.8rem;
+        list-style: none;
+        padding-left: 0;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center py-4">
+    <div class="col-12 col-md-7 col-lg-6">
+        <div class="card card-fit p-4 p-md-5 shadow-lg">
+            <div class="text-center mb-4">
+                <div class="fit-logo-box mx-auto mb-3">F</div>
+                <h3 class="fw-bold text-white mb-1">Crear Cuenta en <span class="text-fit-lime">FIT.CORE</span></h3>
+                <p class="text-muted small mb-0">Regístrate para acceder al sistema centralizado de rutinas</p>
+            </div>
+
+            <form method="post" class="fit-registro-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                {% if form.errors %}
+                <div class="alert alert-danger border-danger bg-dark text-danger small py-2 mb-3">
+                    Registro incorrecto. Inténtelo nuevamente.
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-fit w-100 py-2 mt-2 mb-3">Registrar Cuenta</button>
+            </form>
+
+            <div class="text-center border-top border-secondary pt-3 mt-2">
+                <p class="small text-muted mb-0">
+                    ¿Ya tienes una cuenta?
+                    <a href="{% url 'login' %}" class="text-fit-lime fw-bold text-decoration-none">Inicia sesión aquí</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
